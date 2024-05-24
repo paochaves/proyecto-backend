@@ -1,14 +1,9 @@
-"use strict"
-const express = require("express");
+"use strict";
+import servidor from "./servidor.js";
 
-const servidor = express();
-
-servidor.get("/", (solicitud, respuesta)=>{ 
-    respuesta.json({ 
-        saludo: "Hola"
-    })
+servidor.listen(3000, () => {
+    console.log("servidor corriendo en el puerto 3000");
 });
-servidor.listen(3000);
-console.log("servidor corriendo en el puerto 3000");
+
 
 
