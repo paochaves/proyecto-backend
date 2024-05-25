@@ -3,6 +3,7 @@ import enrutadorUsuarios from "./rutas/rutausuarios.js";
 
 const servidor = express();
 
+servidor.use(express.json());
 servidor.use("/usuarios", enrutadorUsuarios);
 
 servidor.get( function (req, res) {
