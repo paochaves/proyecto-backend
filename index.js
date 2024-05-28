@@ -1,4 +1,5 @@
 "use strict";
+import "./conexionBD.js";
 import servidor from "./servidor.js";
 
 servidor.listen(3000, () => {
