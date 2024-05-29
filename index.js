@@ -1,4 +1,4 @@
-"use strict";
+import "dotenv/config";
 import "./conexionBD.js";
 import servidor from "./servidor.js";
 

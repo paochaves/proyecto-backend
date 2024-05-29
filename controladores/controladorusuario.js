@@ -1,7 +1,8 @@
+import ModeloUsuario from "../modelos/modeloUsuario.js";
+
 const controladorUsuario = {
     crearUsuario: async (solicitud, respuesta) => {
         try {
-            console.log("solicitud body: ", solicitud.body);
             if (solicitud.body.nombre === "") throw new Error("Falta el nombre");
             if (solicitud.body.apellido === "") throw new Error("Falta el apellido");
             if (solicitud.body.nombreDeUsuario === "") throw new Error("Falta el nombre de usuario");
@@ -17,27 +18,58 @@ const controladorUsuario = {
             if (solicitud.body.email === "") throw new Error("Falta el email");
             if (solicitud.body.contrasenia === "") throw new Error("Falta la contrasenia");
             if (solicitud.body.confirmeContrasenia === "") throw new Error("Falta confirmar contrasenia");
+           const nuevoUsuario = new ModeloUsuario(solicitud.body);
+           const usuarioCreado = await nuevoUsuario.save();
+           console.log(usuarioCreado);
+           if (usuarioCreado._id) {
+            respuesta.json ({
+               resultado: "bien",
+               mensaje: "usuario creado",
+               datos: usuarioCreado._id
+            });
+            }
+           
             respuesta.json({mensaje: "Post usuario works"}); 
         } catch (error) {
-            console.log("error: ", error);
-            respuesta.json({error: true, mensaje: "Ocurrio un error al crear el usuario"});
+            respuesta.json ({
+                resultado: "mal",
+                mensaje: "Ocurrio un error al crear el usuario",
+                datos: usuarioCreado._id
+            });
         }
     },
 leerUsuario: async (solicitud, respuesta) => {
     try {
-        console.log(solicitud.params.id);
-        respuesta.json({mensaje: "Se leyo correctamente leer usuario"});
+        const usuarioEncontrado = await ModeloUsuario.findById(solicitud.params.id)
+        if (usuarioEncontrado._id)
+        respuesta.json ({
+            resultado: "bien",
+            mensaje: "usuario leído",
+            datos: usuarioEncontrado
+         });
     } catch (error) {
-        console.log("error: ", error);
-        respuesta.json({error: true, mensaje: "Ocurrio un error al leer usuario"});
+        respuesta.json ({
+            resultado: "mal",
+            mensaje: "Ocurrio un error al leer usuario",
+            datos: error
+        });
     }
     },
 leerUsuarios: async (solicitud, respuesta) => {
     try {
-        respuesta.json({mensaje: "Se leyeron correctamente los usuarios"});
+        const todosLosUsuarios = await ModeloUsuario.find();
+        respuesta.json ({
+            resultado: "bien",
+            mensaje: "usuarios leídos",
+            datos: todosLosUsuarios
+         });
+        
     } catch (error) {
-        console.log("error: ", error);
-        respuesta.json({error: true, mensaje: "Ocurrio un error al leer usuarios"});
+        respuesta.json ({
+            resultado: "mal",
+            mensaje: "Ocurrio un error al leer todos los usuarios",
+            datos: error
+        });
     }
 },
 actualizarUsuario: async (solicitud, respuesta) => {
@@ -52,32 +84,20 @@ actualizarUsuario: async (solicitud, respuesta) => {
 },
 eliminarUsuario: async (solicitud, respuesta) => {
     try {
-        console.log("id: ", solicitud.params.id);
-        respuesta.json({mensaje: "Se elimino correctamente el usuario"});
+        const usuarioEliminado = await ModeloUsuario.findByIdAndDelete(solicitud.params.id)
+        if (usuarioEliminado._id)
+        respuesta.json ({
+            resultado: "bien",
+            mensaje: "usuario eliminado",
+            datos: null
+         });
     } catch (error) {
-        console.log("error: ", error);
-        respuesta.json({error: true, mensaje: "Ocurrio un error al eliminar el usuario"});
-    }
-}
-}
+        respuesta.json ({
+            resultado: "mal",
+            mensaje: "Ocurrio un error al eliminar usuario",
+            datos: error
+        });
+}}
+};
 
 export default controladorUsuario;
-/*
-const usuario = {
-    nombre: "Paola",
-    apellido: "Chaves",
-    nombreDeUsuario: "Paito",
-    foto: "",
-    fechaDeNacimiento: "02/05/1994",
-    tipoDeDocumento: "Cedula",
-    numeroDeDocumento: "1.016.065.722",
-    genero: "Femenino",
-    telefono: "61836667",
-    pais: "Panama",
-    ciudadDeResidencia: "Ciudad de Panama",
-    direccion: "calle 81 casa i 720",
-    email: "paolachaves@bit.institute",
-    contrasenia: "12345678",
-    confirmarContrasenia: "12345678"
-}
-*/
