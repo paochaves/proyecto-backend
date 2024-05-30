@@ -20,15 +20,13 @@ const controladorUsuario = {
             if (solicitud.body.confirmeContrasenia === "") throw new Error("Falta confirmar contrasenia");
            const nuevoUsuario = new ModeloUsuario(solicitud.body);
            const usuarioCreado = await nuevoUsuario.save();
-           console.log(usuarioCreado);
-           if (usuarioCreado._id) {
+            if (usuarioCreado._id) {
             respuesta.json ({
                resultado: "bien",
                mensaje: "usuario creado",
                datos: usuarioCreado._id
             });
             }
-           
             respuesta.json({mensaje: "Post usuario works"}); 
         } catch (error) {
             respuesta.json ({
@@ -45,7 +43,7 @@ leerUsuario: async (solicitud, respuesta) => {
         respuesta.json ({
             resultado: "bien",
             mensaje: "usuario leído",
-            datos: usuarioEncontrado
+            datos: leerUsuario
          });
     } catch (error) {
         respuesta.json ({
@@ -58,28 +56,36 @@ leerUsuario: async (solicitud, respuesta) => {
 leerUsuarios: async (solicitud, respuesta) => {
     try {
         const todosLosUsuarios = await ModeloUsuario.find();
-        respuesta.json ({
+            respuesta.json ({
             resultado: "bien",
             mensaje: "usuarios leídos",
-            datos: todosLosUsuarios
+            datos: todosLosUsuarios,
          });
         
     } catch (error) {
         respuesta.json ({
             resultado: "mal",
             mensaje: "Ocurrio un error al leer todos los usuarios",
-            datos: error
+            datos: error,
         });
     }
 },
 actualizarUsuario: async (solicitud, respuesta) => {
     try {
-        console.log("id: ", solicitud.params.id);
-        console.log("solicitud body: ", solicitud.body);
-        respuesta.json({mensaje: "Se actualizo correctamente el usuario"});
+        const usuarioActualizado = await ModeloUsuario.findByIdAndUpdate(solicitud.params.id, solicitud.body);
+        if (usuarioActualizado._id);
+        respuesta.json ({
+            resultado: "bien",
+            mensaje: "usuario actualizado",
+            datos: usuarioActualizado._id,
+         });
+                
     } catch (error) {
-        console.log("error: ", error);
-        respuesta.json({error: true, mensaje: "Ocurrio un error al actualizar el usuario"});
+        respuesta.json ({
+            resultado: "mal",
+            mensaje: "Ocurrio un error al actualizar usuario",
+            datos: error,
+        });
     }
 },
 eliminarUsuario: async (solicitud, respuesta) => {
