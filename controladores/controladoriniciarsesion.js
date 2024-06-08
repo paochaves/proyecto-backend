@@ -22,6 +22,7 @@ const ControladorIniciarSesion = {
         respuesta.json({
           resultado: 'bien',
           mensaje: 'acceso permitido',
+          datos: usuarioEncontrado._id,
           datos: token,
         });
       } else {
