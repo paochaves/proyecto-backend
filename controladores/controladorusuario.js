@@ -4,7 +4,7 @@ import ModeloUsuario from "../modelos/modeloUsuario.js";
         const controladorUsuario = {
             crearUsuario: async (solicitud, respuesta) => {
                 try {
-                    const { nombre, apellido, nombreDeUsuario, fechaDeNacimiento, tipoDeDocumento, numeroDeDocumento, genero, telefono, pais, ciudadDeResidencia, direccion, correoElectronico, contrasenia, confirmarContrasenia } = solicitud.body;
+                    const { nombre, apellido, nombreDeUsuario, fechaDeNacimiento, tipoDeDocumento, numeroDeDocumento, genero, telefono, pais, ciudadDeResidencia, direccion, correoElectronico, contrasenia } = solicitud.body;
                     const contraseniaProtegida = await bcrypt.hash(contrasenia, 10)//incriptar la contraseña
                     const nuevoUsuario = new ModeloUsuario({
                         nombre,
@@ -19,7 +19,6 @@ import ModeloUsuario from "../modelos/modeloUsuario.js";
                         ciudadDeResidencia, 
                         direccion, 
                         correoElectronico, 
-                        confirmarContrasenia,
                         contrasenia: contraseniaProtegida,
                      });
                         console.log(contraseniaProtegida);
@@ -36,8 +35,7 @@ import ModeloUsuario from "../modelos/modeloUsuario.js";
             if (solicitud.body.direccion === "") throw new Error("Falta la direccion");
             if (solicitud.body.correoElectronico === "") throw new Error("Falta el correo electronico");
             if (solicitud.body.contrasenia === "") throw new Error("Falta la contrasenia");
-            if (solicitud.body.confirmarContrasenia === "") throw new Error("Falta confirmar contrasenia");
-                     
+                                 
            const usuarioCreado = await nuevoUsuario.save();
             if (usuarioCreado._id) {
             respuesta.json ({

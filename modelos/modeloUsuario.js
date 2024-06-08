@@ -14,8 +14,7 @@ const esquemaUsuario = new Schema(
     ciudadDeResidencia: {type: String, required: true},
     direccion: {type: Schema.Types.Mixed, required: true},
     correoElectronico: {type: String, required: true},
-    contrasenia: {type: String, required: true},
-    confirmarContrasenia: {type: String, required: true},
+    contrasenia: {type: String, required: true}   
 });
 
 export default model("Usuario", esquemaUsuario);
