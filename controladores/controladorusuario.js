@@ -60,7 +60,7 @@ leerUsuario: async (solicitud, respuesta) => {
         respuesta.json ({
             resultado: "bien",
             mensaje: "usuario leído",
-            datos: leerUsuario
+            datos: usuarioEncontrado._id
          });
     } catch (error) {
         respuesta.json ({

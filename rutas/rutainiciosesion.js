@@ -4,5 +4,5 @@ import controladorIniciarSesion from "../controladores/controladoriniciarsesion.
 const enrutadorIniciarSesion = Router();
 
 enrutadorIniciarSesion.post('/', controladorIniciarSesion.iniciarSesion );
-
+enrutadorIniciarSesion.get('/:token', controladorIniciarSesion.validarToken );
 export default enrutadorIniciarSesion;
