@@ -14,6 +14,7 @@ servidor.use(express.json());
 servidor.use("/usuarios", enrutadorUsuarios);
 servidor.use("/iniciarSesion", enrutadorIniciarSesion);
 servidor.use("/can", enrutadorCanes);
+servidor.use("/validarToken", enrutadorIniciarSesion);
 
 servidor.get('/', (solicitud, respuesta) => {
     respuesta.status(404).send('No encontrado');
