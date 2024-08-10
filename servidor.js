@@ -4,7 +4,7 @@ import morgan from "morgan";
 import enrutadorUsuarios from "./rutas/rutausuarios.js";
 import enrutadorIniciarSesion from "./rutas/rutainiciosesion.js";
 import enrutadorCanes from "./rutas/rutas.js";
-import enrutadorCitas from "./rutas/rutacitas.js";
+import app from "./rutas/rutacitas.js";
 
 
 const servidor = express();
@@ -16,7 +16,7 @@ servidor.use("/usuarios", enrutadorUsuarios);
 servidor.use("/iniciarSesion", enrutadorIniciarSesion);
 servidor.use("/can", enrutadorCanes);
 servidor.use("/validarToken", enrutadorIniciarSesion);
-servidor.use("/submit", enrutadorCitas);
+servidor.use("/submit", app);
 
 servidor.get('/', (solicitud, respuesta) => {
     respuesta.status(404).send('No encontrado');
