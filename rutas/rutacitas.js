@@ -1,8 +1,10 @@
+import { Router } from "express";
 import plantillacitas from "../modelos/plantillacitas.js";
 
+const enrutadorCitas = Router();
 
 
-app.post('/', async (req, res) => {
+enrutadorCitas.post('/', async (req, res) => {
     const { hogarTemporal, paseadorCanino, voluntariadoDeLimpieza, veterinaria, donar, fecha } = req.body;
   
     const nuevaCita = new plantillacitas({
@@ -18,4 +20,4 @@ app.post('/', async (req, res) => {
     res.send('Su cita fue agendada con éxito');
   });
   
-export default app
+export default enrutadorCitas
