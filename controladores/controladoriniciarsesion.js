@@ -3,6 +3,7 @@ import { generarToken, verificarToken } from '../ayudas/funciones.js';
 import ModeloUsuario from '../modelos/modeloUsuario.js';
 
 const ControladorIniciarSesion = {
+  
   iniciarSesion: async (solicitud, respuesta) => {
     console.log("solicitud", solicitud);
     try {
